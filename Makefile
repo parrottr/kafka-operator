@@ -2,6 +2,8 @@
 TAG ?= $(shell git describe --tags --abbrev=0 --match '[0-9].*[0-9].*[0-9]' 2>/dev/null )
 IMG ?= banzaicloud/kafka-operator:$(TAG)
 
+NS ?= kafka
+
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true"
 
@@ -88,9 +90,10 @@ install: manifests
 
 # Deploy controller in the configured Kubernetes cluster in ~/.kube/config
 deploy: install-kustomize manifests
-	bin/kustomize build config | kubectl apply -f -
+	bin/kustomize build config | kubectl apply  --namespace=${NS} -f -
 	./scripts/image_patch.sh "${KUSTOMIZE_BASE}/manager_image_patch.yaml" ${IMG}
-	bin/kustomize build $(KUSTOMIZE_BASE) | kubectl apply -f -
+	./scripts/ns_patch.sh "${KUSTOMIZE_BASE}/kustomization.yaml" ${NS}
+	bin/kustomize build $(KUSTOMIZE_BASE) | kubectl apply --namespace=${NS} -f -
 
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen
