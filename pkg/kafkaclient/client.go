@@ -15,6 +15,7 @@
 package kafkaclient
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -85,6 +86,8 @@ func New(opts *KafkaConfig) KafkaClient {
 func (k *kafkaClient) Open() error {
 	var err error
 	config := k.getSaramaConfig()
+	log.Info(fmt.Sprintf("Opening connection to broker: %s", k.opts.BrokerURI))
+
 	if k.admin, err = k.newClusterAdmin([]string{k.opts.BrokerURI}, config); err != nil {
 		err = errorfactory.New(errorfactory.BrokersUnreachable{}, err, "could not connect to kafka brokers")
 		return err

@@ -95,6 +95,12 @@ func (r *KafkaClusterReconciler) Reconcile(request ctrl.Request) (ctrl.Result, e
 		return requeueWithError(log, err.Error(), err)
 	}
 
+	// Check if we actually manage this KafkaCluster or if it is a reference to an external cluster
+	if instance.Spec.ExternallyManagedCluster {
+		log.Info("Externally managed Kafka cluster. Ignoring.")
+		return reconciled()
+	}
+
 	// Check if marked for deletion and run finalizers
 	if k8sutil.IsMarkedForDeletion(instance.ObjectMeta) {
 		return r.checkFinalizers(ctx, log, instance)

@@ -1159,6 +1159,8 @@ spec:
                     type: object
                   type: array
               type: object
+            externallyManagedCluster:
+              type: boolean
             headlessServiceEnabled:
               type: boolean
             ingressController:
@@ -1482,6 +1484,7 @@ spec:
           required:
           - brokers
           - cruiseControlConfig
+          - externallyManagedCluster
           - headlessServiceEnabled
           - listenersConfig
           - oneBrokerPerNode

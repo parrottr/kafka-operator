@@ -2,7 +2,7 @@ apiVersion: kafka.banzaicloud.io/v1alpha1
 kind: KafkaUser
 metadata:
   name: example-kafkauser
-  namespace: kafka
+  namespace: confluent
 spec:
   clusterRef:
     name: kafka

@@ -2,7 +2,7 @@ bases:
   - ../certmanager-with-auth-proxy
 
 # Adds namespace to all resources.
-namespace: kafka
+namespace: confluent
 
 namePrefix: kafka-operator-
 

@@ -31,8 +31,9 @@ import (
 
 // KafkaClusterSpec defines the desired state of KafkaCluster
 type KafkaClusterSpec struct {
-	HeadlessServiceEnabled bool            `json:"headlessServiceEnabled"`
-	ListenersConfig        ListenersConfig `json:"listenersConfig"`
+	HeadlessServiceEnabled   bool            `json:"headlessServiceEnabled"`
+	ExternallyManagedCluster bool            `json:"externallyManagedCluster"`
+	ListenersConfig          ListenersConfig `json:"listenersConfig"`
 	// ZKAddresses specifies the ZooKeeper connection string
 	// in the form hostname:port where host and port are the host and port of a ZooKeeper server.
 	ZKAddresses []string `json:"zkAddresses"`
